@@ -4,7 +4,7 @@ import {
     Switch,
     Route,
   } from "react-router-dom";
-import App from 'src/app';
+const App = React.lazy(() => import('src/app'));
 import Loader from 'uielements/loader/loader.component';
 
 function LazyRoute({ component, route }) {
