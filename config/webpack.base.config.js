@@ -59,6 +59,7 @@ module.exports = function({ plugins }) {
                 assets: paths.assets,
                 src: paths.src,
                 routes: paths.routes,
+                components: paths.components,
             }
         },
     });
