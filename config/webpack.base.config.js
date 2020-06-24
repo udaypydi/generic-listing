@@ -57,6 +57,8 @@ module.exports = function({ plugins }) {
             alias: {
                 uielements: paths.uielements,
                 assets: paths.assets,
+                src: paths.src,
+                routes: paths.routes,
             }
         },
     });
