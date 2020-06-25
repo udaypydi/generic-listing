@@ -1,9 +1,12 @@
-import React from 'react';
-import HoteListing from 'components/hotellisting';
+import React, { Suspense } from 'react';
+import Loader from 'uielements/loader/loader.component';
+const HoteListing = React.lazy(() => import('components/hotellisting'));
 import './app.scss';
 
 export default function App() {
   return (
-    <HoteListing />
+    <Suspense fallback={<Loader />}>
+      <HoteListing />
+    </Suspense>
   );
 }
