@@ -60,6 +60,7 @@ module.exports = function({ plugins }) {
                 src: paths.src,
                 routes: paths.routes,
                 components: paths.components,
+                atoms: paths.atoms,
             }
         },
     });

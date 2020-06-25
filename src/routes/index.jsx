@@ -4,7 +4,8 @@ import {
     Switch,
     Route,
   } from "react-router-dom";
-const App = React.lazy(() => import('src/app'));
+import 'assets/css/main.css';
+import App from 'src/app';
 const HotelDescription = React.lazy(() => import('components/hoteldescription'));
 import Loader from 'uielements/loader/loader.component';
 
@@ -15,7 +16,9 @@ function LazyRoute({ component: Component , route }) {
             path={route} 
             render={props => (
                 <Suspense fallback={<Loader />}>
-                    <Component {...props} />
+                    <div className="bg-gray-100 w-full h-screen flex flex-1 items-center flex-col">
+                        <Component {...props} />
+                    </div>  
                 </Suspense>
             )} 
         />
@@ -26,7 +29,7 @@ function RoutesManager() {
     return (
         <Router>
             <Switch>
-                <LazyRoute route="/" component={App} />
+                <Route exact path="/" component={App} />
                 <LazyRoute route="/hotel" component={HotelDescription} />
             </Switch>
         </Router>

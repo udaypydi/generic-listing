@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import cx from 'classnames';
 
 function Button(props) {
-  const { buttonText, primary, onClick, customClass } = props;
+  const {
+    buttonText,
+    primary,
+    onClick,
+    customClass,
+    disabled,
+  } = props;
   let btnClass = '';
 
   if (primary) {
@@ -11,10 +17,14 @@ function Button(props) {
   }
 
   return (
-    <button 
-      type="button" 
-      className={cx(btnClass, customClass)}
+    <button
+      type="button"
+      className={cx(btnClass, customClass, {
+        'bg-gray-500': disabled,
+        'text-black-700': disabled,
+      })}
       onClick={onClick}
+      disabled={disabled}
     >
       {buttonText}
     </button>
@@ -46,12 +56,18 @@ Button.propTypes = {
    * @customClass Add custom tailwind classes to button
    */
   customClass: PropTypes.string,
+
+  /**
+   * @disabled Disable button
+   */
+  disabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
   primary: false,
   onClick: () => false,
   customClass: '',
+  disabled: false,
 };
 
 
