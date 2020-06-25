@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import Loader from 'uielements/loader/loader.component';
 import { findMinPrice } from './hotellist.utils';
 import HotelCard from './hotelcard';
 
 function HotelListing(props) {
     const [hotels, setHotels] = useState([]);
     const [price, setHotelPrice] = useState({});
+    const [isDataReady, setIsDataReady] = useState(false);
 
     useEffect(() => {
         fetch('http://www.mocky.io/v2/5a7f23442e00005000b56873')
@@ -21,6 +23,7 @@ function HotelListing(props) {
                                 ...hotelPrices, 
                                 [prices.id] : hotelPrice 
                             }));
+                            setIsDataReady(true);
                         });
                     });
             });
@@ -34,13 +37,16 @@ function HotelListing(props) {
     return (
         <div className="bg-gray-100 h-screen flex items-center flex-col">
             {
-                hotels.map(hotel => (
+                isDataReady && hotels.map(hotel => (
                     <HotelCard 
                         hotel={{ ...hotel, price: price[hotel.id]}} 
                         isSoldOut={!price[hotel.id]} 
                         onCardClick={navigateToHotelDescription}
                     />
                 ))
+            }
+            {
+                !isDataReady && <Loader />
             }
         </div>
     )

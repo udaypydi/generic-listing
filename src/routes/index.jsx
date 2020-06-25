@@ -8,11 +8,17 @@ const App = React.lazy(() => import('src/app'));
 const HotelDescription = React.lazy(() => import('components/hoteldescription'));
 import Loader from 'uielements/loader/loader.component';
 
-function LazyRoute({ component, route }) {
+function LazyRoute({ component: Component , route }) {
     return (
-        <Suspense fallback={<Loader />}>
-           <Route exact path={route} component={component} />
-        </Suspense>
+        <Route 
+            exact 
+            path={route} 
+            render={props => (
+                <Suspense fallback={<Loader />}>
+                    <Component {...props} />
+                </Suspense>
+            )} 
+        />
     );
 }
 
@@ -20,8 +26,8 @@ function RoutesManager() {
     return (
         <Router>
             <Switch>
-                <LazyRoute exact route="/" component={App} />
-                <LazyRoute exact route="/hotel" component={HotelDescription} />
+                <LazyRoute route="/" component={App} />
+                <LazyRoute route="/hotel" component={HotelDescription} />
             </Switch>
         </Router>
       
