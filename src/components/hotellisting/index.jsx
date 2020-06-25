@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import Loader from 'uielements/loader/loader.component';
 import { findMinPrice } from './hotellist.utils';
+import { fetchHotels, fetchHotelPrices } from './hotellisting.api';
 import HotelCard from './hotelcard';
 
 function HotelListing(props) {
@@ -10,12 +11,10 @@ function HotelListing(props) {
     const [isDataReady, setIsDataReady] = useState(false);
 
     useEffect(() => {
-        fetch('http://www.mocky.io/v2/5a7f23442e00005000b56873')
-            .then(res => res.json())
+        fetchHotels()
             .then(json => {
                 setHotels(json.data);
-                fetch('http://www.mocky.io/v2/5a7f24f02e00005200b56875')
-                    .then(response => response.json())
+                fetchHotelPrices()
                     .then(priceJson => {
                         priceJson.data.forEach(prices => {
                             const hotelPrice = findMinPrice(prices.price);
