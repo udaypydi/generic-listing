@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { selectedHotel } from 'atoms';
+import cx from 'classnames';
 import hotelImage from 'assets/img/hotel.jpg';
 import HotelTag from 'components/hoteltags';
 import Button from 'uielements/button';
 import { fetchHotelDetails } from './hoteldescription.api';
+import './hoteldescription.scss';
 
 function HotelDescription(props) {
   const [policies, setHotelPolicies] = useState([]);
   const [essentials, setEssentials] = useState([]);
+  const [activeTab, setActiveTab] = useState('POLICIES');
   const hotel = useRecoilValue(selectedHotel);
 
   useEffect(() => {
@@ -54,9 +57,55 @@ function HotelDescription(props) {
 
         </div>
         </div>
-        <div className="w-3/4 bg-white shadow-sm flex">
-            <p className="p-4 cursor-pointer text-gray-500 hover:bg-gray-300">Policies</p>
-            <p className="p-4 cursor-pointer text-gray-500 hover:bg-gray-300">Essentials</p>
+        <div className="w-3/4 bg-white shadow-sm flex HotelDescriptionTab">
+            <p 
+                className={cx(
+                    "p-4 cursor-pointer text-gray-500 hover:bg-gray-300",
+                    {
+                        "Element--active": activeTab === 'POLICIES',
+                    }
+                )}
+                onClick={() => setActiveTab('POLICIES')}
+            >Policies</p>
+            <p 
+                className={cx(
+                    "p-4 cursor-pointer text-gray-500 hover:bg-gray-300",
+                    {
+                        "Element--active": activeTab === 'ESSENTIALS',
+                    }
+                )}
+                onClick={() => setActiveTab('ESSENTIALS')}
+            >Essentials</p>
+        </div>
+        <div className="w-3/4 bg-white shadow-sm flex p-5">
+            {
+                activeTab === 'POLICIES' && (
+                    <div>
+                        <p className="text-2xl font-bold">Policies</p>
+                        <div>
+                            {
+                                policies.map((policy) => (
+                                    <p className="text-gray-500">{policy}</p>
+                                ))
+                            }
+                        </div>    
+                    </div>
+                )
+            }
+            {
+                activeTab === 'ESSENTIALS' && (
+                    <div>
+                        <p className="text-2xl font-bold">Essentials</p>
+                        <div>
+                            {
+                                essentials.map((essential) => (
+                                    <p className="text-gray-500">{essential}</p>
+                                ))
+                            }
+                        </div>    
+                    </div>
+                )
+            }
         </div>
     </>
   );
