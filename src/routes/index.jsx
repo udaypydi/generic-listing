@@ -30,7 +30,7 @@ function RoutesManager() {
         <Router>
             <Switch>
                 <Route exact path="/" component={App} />
-                <LazyRoute route="/hotel" component={HotelDescription} />
+                <LazyRoute route="/hotel/:id" component={HotelDescription} />
             </Switch>
         </Router>
       

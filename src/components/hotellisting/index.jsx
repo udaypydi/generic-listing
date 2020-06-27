@@ -35,7 +35,7 @@ function HotelListing(props) {
   function navigateToHotelDescription(hotel) {
     const { history } = props;
     setClickedHotel(hotel);
-    history.push('/hotel');
+    history.push(`/hotel/${hotel.id}`);
   }
 
   return (

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
+import { withRouter } from 'react-router-dom';
 import { selectedHotel } from 'atoms';
 import cx from 'classnames';
 import hotelImage from 'assets/img/hotel.jpg';
@@ -20,6 +21,11 @@ function HotelDescription(props) {
         setHotelPolicies(json.data.policies);
         setEssentials(json.data.essentials);
       });
+
+      if (!hotel.id) {
+        const { history } = props;
+        history.push('/');
+      }
   }, []);
 
   return (
@@ -77,7 +83,7 @@ function HotelDescription(props) {
                 onClick={() => setActiveTab('ESSENTIALS')}
             >Essentials</p>
         </div>
-        <div className="w-3/4 bg-white shadow-sm flex p-5">
+        <div className="w-3/4 bg-white shadow-sm flex p-5 mt-2">
             {
                 activeTab === 'POLICIES' && (
                     <div>
@@ -111,4 +117,4 @@ function HotelDescription(props) {
   );
 }
 
-export default HotelDescription;
+export default withRouter(HotelDescription);
