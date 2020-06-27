@@ -2,12 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { withRouter } from 'react-router-dom';
 import { selectedHotel } from 'atoms';
-import cx from 'classnames';
 import hotelImage from 'assets/img/hotel.jpg';
+import Tab from 'components/tab';
 import HotelTag from 'components/hoteltags';
 import Button from 'uielements/button';
 import { fetchHotelDetails } from './hoteldescription.api';
-import './hoteldescription.scss';
 
 function HotelDescription(props) {
   const [policies, setHotelPolicies] = useState([]);
@@ -63,25 +62,15 @@ function HotelDescription(props) {
 
         </div>
         </div>
-        <div className="w-3/4 bg-white shadow-sm flex HotelDescriptionTab">
-            <p 
-                className={cx(
-                    "p-4 cursor-pointer text-gray-500 hover:bg-gray-300",
-                    {
-                        "Element--active": activeTab === 'POLICIES',
-                    }
-                )}
-                onClick={() => setActiveTab('POLICIES')}
-            >Policies</p>
-            <p 
-                className={cx(
-                    "p-4 cursor-pointer text-gray-500 hover:bg-gray-300",
-                    {
-                        "Element--active": activeTab === 'ESSENTIALS',
-                    }
-                )}
-                onClick={() => setActiveTab('ESSENTIALS')}
-            >Essentials</p>
+        <div className="w-3/4">
+            <Tab 
+                tabElements={[ 
+                    { name: 'Policies', value: 'POLICIES' },
+                    { name: 'Essentials', value: 'ESSENTIALS' },
+                ]}
+                activeTab={activeTab}
+                onTabClick={(element) => setActiveTab(element)}
+            />
         </div>
         <div className="w-3/4 bg-white shadow-sm flex p-5 mt-2">
             {
